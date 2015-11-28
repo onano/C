@@ -9,9 +9,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include <string.h>
 
-int main() {
+int main(void) {
 	
 	char fname[20], lname[30];
 
@@ -21,14 +20,9 @@ int main() {
 	printf("\nEnter Your Last name : ");
 	scanf("%s", lname);
 	
-	if(islower(fname[0]) || islower(lname[0])) {
-		fname[0] = toupper(fname[0]);
-		lname[0] = toupper(lname[0]);
-		printf("\nYour name is now fixed and entered to database as : %s %s", fname, lname);
-	}
-	else {
-		printf("\nYour name is entered to database : %s %s", fname, lname);
-	}
+	fname[0] = toupper(fname[0]);
+	lname[0] = toupper(lname[0]);
+	printf("\nYour name is now fixed and entered to database as : %s %s", fname, lname);
 	
 	return 0;
 }
