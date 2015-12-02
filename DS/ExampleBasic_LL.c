@@ -14,6 +14,7 @@
  * getNewNode = a simple node generater logic
  * reverse_list = reversing out Linked List.
  * printnode = simple printing of node.
+ * printnode_reverse = to see your list in reverse order without actually reversing it.
  *
  **/
 struct node* insertnode(int val, int pos, struct node* ptrHead);
@@ -21,6 +22,7 @@ struct node* deletenode(int pos, struct node *ptrHead);
 struct node* reverse_list(struct node *ptrHead);
 struct node* getNewNode(int val);
 void printnode(struct node* ptrHead);
+void printnode_reverse(struct node *ptrHead);
 
 /*
  * Nodes For Linked List
@@ -54,7 +56,8 @@ int main() {
 	puts("What You want to Do with Your list?");
 	puts("Press 1 to Delete a node");
 	puts("Press 2 to Reverse This List");
-	puts("Press 3 to exit.");
+	puts("Press 3 to see your list in reverse order (without reversing it)");
+	puts("Press 4 to exit.");
 	scanf(" %d", &usrEnt);
 
 	pos = 0;
@@ -69,6 +72,11 @@ int main() {
 		puts("Reversing your List...");
 		head = reverse_list(head);
 		printnode(head);
+		return SUCCESS;
+	}
+	else if(usrEnt == 3){
+		printf("Your List is : ");
+		printnode_reverse(head);
 		return SUCCESS;
 	}
 	else {
@@ -137,5 +145,13 @@ void printnode(struct node *ptrHead) {
 		ptrHead = ptrHead->next;
 	}
 	printf("\n");
+}
+
+void printnode_reverse(struct node *ptrHead) {
+	if(ptrHead == NULL) {
+		return;
+	}
+	printnode_reverse(ptrHead->next);
+	printf("%d ", ptrHead->data);
 }
 
