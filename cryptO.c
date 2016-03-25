@@ -22,13 +22,13 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 #include <ctype.h>
 
 static int get_matrix(void);
 
 struct data {
 	char deString[30];
+	char matrix[50][50];
 };
 
 int main(int argc, char **argv)
@@ -45,48 +45,47 @@ int check_deString(struct data *d) {
 	
 	for(int i=0; d->deString[i]!='\0'; i++) {
 
-		if(isalpha(d->deString[i])) {
-			if(isupper(d->deString[i]))
+		 if(isalpha(d->deString[i])) {
+			 if(isupper(d->deString[i]))
 				flag++;
 			 
-			if(islower(d->deString[i]))
+			 if(islower(d->deString[i]))
 				low++;
-		}
+		 }
 		 
-		if(isdigit(d->deString[i]))
-			flag++;
+		 if(isdigit(d->deString[i]))
+			 flag++;
 		 
-		if(ispunct(d->deString[i]))
-			flag++;
-	}
+		 if(ispunct(d->deString[i]))
+			 flag++;
+	 }
 
 	return (flag >=3 && low>=1) ? 0 : 1;
 }
 
 
 int set_matrix(struct data *d) {
-	char matrix[50][50];
-	int i = 0, flag = 0;
-
-	while(d->deString[i]!='\0') {
-		for(int j=0; j<50; j++) {
-			if(j == i)
-				matrix[i][j] = d->deString[i];
-			else
-				matrix[i][j] = 'x';
-		}
-		flag++;
-		i++;
-	}
+		int i = 0, flag = 0;
 		
-	/* Debug display matrix */
-	for(int x=0; x<50; x++) {
-		for(int y=0; y<50; y++) {
-			printf("%c", matrix[x][y]);
+		while(d->deString[i]!='\0') {
+			for(int j=0; j<50; j++) {
+				if(j == i)
+					d->matrix[i][j] = d->deString[i];
+				else
+					d->matrix[i][j] = 'x';
+			}
+			flag++;
+			i++;
 		}
-		printf("\n");
-	}
-	return 0;
+		
+		/* Debug display matrix */
+		for(int x=0; x<50; x++) {
+			for(int y=0; y<50; y++) {
+				printf("%c", d->matrix[x][y]);
+			}
+			printf("\n");
+		}
+		return 0;
 }
 
 static int get_matrix(void) 
@@ -108,6 +107,3 @@ static int get_matrix(void)
 	
 	return 0;
 }
-
-
-
