@@ -43,26 +43,26 @@ int main(int argc, char **argv)
 	return 0;
 }
 
-int check_deString(char *upasswd) {
+int check_deString(struct data *d) {
 	
 	int flag = 0, low = 0;
 	
-	for(int i=0; upasswd[i]!='\0'; i++) {
-		 if(isalpha(upasswd[i])) {
-			 if(isupper(upasswd[i])) {
+	for(int i=0; d->deString[i]!='\0'; i++) {
+		 if(isalpha(d->deString[i])) {
+			 if(isupper(d->deString[i])) {
 				flag++;
 			 }
 			 
-			 if(islower(upasswd[i])) {
+			 if(islower(d->deString[i])) {
 				low++; 
 			 }
 		 }
 		 
-		 if(isdigit(upasswd[i])) {
+		 if(isdigit(d->deString[i])) {
 			 flag++;
 		 }
 		 
-		 if(ispunct(upasswd[i])) {
+		 if(ispunct(d->deString[i])) {
 			 flag++;
 		 }
 	 }
@@ -73,16 +73,15 @@ int check_deString(char *upasswd) {
 		 return 1;
 }
 
-//while(true)
 
-int set_matrix(char *upasswd) {
+int set_matrix(struct data *d) {
 		char matrix[50][50];
 		int i = 0, flag = 0;
-		//printf("The string is : %s \n", upasswd);
-		while(upasswd[i]!='\0') {
+
+		while(d->deString[i]!='\0') {
 			for(int j=0; j<50; j++) {
 				if(j == i)
-					matrix[i][j] = upasswd[i];
+					matrix[i][j] = d->deString[i];
 				else
 					matrix[i][j] = 'x';
 			}
@@ -107,14 +106,13 @@ static int get_matrix(void)
 	printf("Please enter your desired string \n");
 	scanf("%s", d->deString);
 	
-	err = check_deString(d->deString);
-	printf("The string is : %s \n", d->deString);
+	err = check_deString(d);
 	if (err) {
 		printf("%s : string syntax \n", __func__);
 		return 1;
 	}
 	
-	err = set_matrix(d->deString);
+	err = set_matrix(d);
 	if (err) {
 		printf("%s : matrix \n", __func__);
 		return 1;
@@ -122,6 +120,3 @@ static int get_matrix(void)
 	
 	return 0;
 }
-
-
-
