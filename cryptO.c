@@ -33,13 +33,9 @@ struct data {
 
 int main(int argc, char **argv)
 {	
-	int err;
+	if (get_matrix())
+		printf("%s : error in setting intial matrix \n", __func__);		
 	
-	err = get_matrix();
-	if (err) {
-		printf("%s : error in setting intial matrix \n", __func__);
-	}
-		
 	return 0;
 }
 
@@ -48,75 +44,70 @@ int check_deString(struct data *d) {
 	int flag = 0, low = 0;
 	
 	for(int i=0; d->deString[i]!='\0'; i++) {
-		 if(isalpha(d->deString[i])) {
-			 if(isupper(d->deString[i])) {
+
+		if(isalpha(d->deString[i])) {
+			if(isupper(d->deString[i]))
 				flag++;
-			 }
 			 
-			 if(islower(d->deString[i])) {
-				low++; 
-			 }
-		 }
+			if(islower(d->deString[i]))
+				low++;
+		}
 		 
-		 if(isdigit(d->deString[i])) {
-			 flag++;
-		 }
+		if(isdigit(d->deString[i]))
+			flag++;
 		 
-		 if(ispunct(d->deString[i])) {
-			 flag++;
-		 }
-	 }
-	 
-	 if(flag >= 3 && low >= 1)
-		 return 0;
-	 else
-		 return 1;
+		if(ispunct(d->deString[i]))
+			flag++;
+	}
+
+	return (flag >=3 && low>=1) ? 0 : 1;
 }
 
 
 int set_matrix(struct data *d) {
-		char matrix[50][50];
-		int i = 0, flag = 0;
+	char matrix[50][50];
+	int i = 0, flag = 0;
 
-		while(d->deString[i]!='\0') {
-			for(int j=0; j<50; j++) {
-				if(j == i)
-					matrix[i][j] = d->deString[i];
-				else
-					matrix[i][j] = 'x';
-			}
-			flag++;
-			i++;
+	while(d->deString[i]!='\0') {
+		for(int j=0; j<50; j++) {
+			if(j == i)
+				matrix[i][j] = d->deString[i];
+			else
+				matrix[i][j] = 'x';
 		}
+		flag++;
+		i++;
+	}
 		
-		for(int x=0; x<50; x++) {
-			for(int y=0; y<50; y++) {
-				printf("%c", matrix[x][y]);
-			}
-			printf("\n");
+	/* Debug display matrix */
+	for(int x=0; x<50; x++) {
+		for(int y=0; y<50; y++) {
+			printf("%c", matrix[x][y]);
 		}
-		return 0;
+		printf("\n");
+	}
+	return 0;
 }
 
 static int get_matrix(void) 
 {
 	struct data *d = (struct data *)malloc(sizeof(struct data));
-	int err;
 
 	printf("Please enter your desired string \n");
 	scanf("%s", d->deString);
 	
-	err = check_deString(d);
-	if (err) {
+	if (check_deString(d)) {
 		printf("%s : string syntax \n", __func__);
 		return 1;
 	}
 	
-	err = set_matrix(d);
-	if (err) {
+	if (set_matrix(d)) {
 		printf("%s : matrix \n", __func__);
 		return 1;
 	}
 	
 	return 0;
 }
+
+
+
